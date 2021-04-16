@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: chronograf
+  name: chronograf
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fdk.service: chronograf
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        fdk.service: chronograf
+    spec:
+      containers:
+        - env:
+          - name: NAMESPACE
+            valueFrom:
+              secretKeyRef:
+                name: commonurl-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                key: NAMESPACE
+          name: chronograf
+          image: chronograf:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8888
+          resources:
+            requests:
+              memory: {{ required "Missing value CHRONOGRAF_MEMORY" .Values.CHRONOGRAF_MEMORY | quote }}
+      restartPolicy: Always
+status: {}

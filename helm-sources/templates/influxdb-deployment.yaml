@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: influxdb
+  name: influxdb
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fdk.service: influxdb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        fdk.service: influxdb
+    spec:
+      containers:
+        - env:
+          - name: NAMESPACE
+            valueFrom:
+              secretKeyRef:
+                name: commonurl-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                key: NAMESPACE
+          name: influxdb
+          image: influxdb:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8083
+          - containerPort: 8086
+          - containerPort: 8090
+          resources:
+            requests:
+              memory: {{ required "Missing value INFLUXDB_MEMORY" .Values.INFLUXDB_MEMORY | quote }}
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,55 @@
+name: Deploy to staging
+
+on:
+  pull_request:
+    types: [ready_for_review, opened, reopened, synchronize]
+    branches:
+      - master
+  # Allows you to run the workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy-influxdb:
+    name: Build and deploy to staging environment when pull request is created
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - uses: actions/checkout@v2
+
+#      - name: Configure docker to use the gcloud command-line tool as a credential helper
+#        run: gcloud auth configure-docker eu.gcr.io
+
+      - name: Apply Helm template
+        run: |
+          helm repo add example-monitoring https://informasjonsforvaltning.github.io/example-monitoring/
+          helm fetch --untar --untardir ./helm example-monitoring/example-monitoring
+          helm template -f ./helm-sources/values/staging.yaml ./helm/example-monitoring/  > ./kubectlapply.yaml
+          chmod o+w ./kubectlapply.yaml
+          cat kubectlapply.yaml
+
+      - name: Get kubeconfig file from GKE
+        uses: machine-learning-apps/gke-kubeconfig@master
+        with:
+          application_credentials: ${{ secrets.DIGDIR_FDK_DEV_AUTODEPLOY }}
+          project_id: digdir-fdk-dev
+          location_zone: europe-north1-a
+          cluster_name: digdir-fdk-dev
+
+      - name: Deploy to staging
+        uses: docker://bitnami/kubectl:latest
+        env:
+          KUBECONFIG: '/github/workspace/.kube/config'
+        with:
+          args: "apply -f ./kubectlapply.yaml --force"
+
+      - name: Notify slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: 'Application: (T)elegraf,(I)nfluxdb,(C)hronograf,(K)apacitor | Environment: staging'
+          fields: commit,author,workflow
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: kapacitor
+  name: kapacitor
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fdk.service: influxdb
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        fdk.service: kapacitor
+    spec:
+      containers:
+      - env:
+        - name: KAPACITOR_INFLUXDB_0_URLS_0
+          value: http://influxdb:8086
+        - name: NAMESPACE
+          valueFrom:
+            secretKeyRef:
+              name: commonurl-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+              key: NAMESPACE
+        name: kapacitor
+        image: kapacitor:latest
+        ports:
+        - containerPort: 9092
+        resources:
+          requests:
+            memory: {{ required "Missing value KAPACITOR_MEMORY" .Values.KAPACITOR_MEMORY | quote }}
+      restartPolicy: Always
+status: {}
