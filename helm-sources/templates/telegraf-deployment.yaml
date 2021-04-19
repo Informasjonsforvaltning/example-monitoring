@@ -34,8 +34,8 @@ spec:
             requests:
               memory: {{ required "Missing value TELEGRAF_MEMORY" .Values.TELEGRAF_MEMORY | quote }}
           volumeMounts:
-          - mountPath: /etc/telegraf/telegraf.conf
-            name: telegraf-claim0
+          - name: telegraf-claim0
+            mountPath: /etc/telegraf/telegraf.conf
             readOnly: true
         volumes:
         - name: telegraf-claim0
