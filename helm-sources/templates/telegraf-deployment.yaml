@@ -34,13 +34,13 @@ spec:
             requests:
               memory: {{ required "Missing value TELEGRAF_MEMORY" .Values.TELEGRAF_MEMORY | quote }}
         volumeMounts:
-        - name: telegraf-claim0
-          mountPath: /etc/telegraf/telegraf.conf
+        - mountPath: /etc/telegraf/telegraf.conf
+          name: telegraf-claim0
           readOnly: true
+      restartPolicy: Always
       volumes:
       - name: telegraf-claim0
         persistentVolumeClaim:
           claimName: telegraf-claim0
           readOnly: true
-      restartPolicy: Always
 status: {}
