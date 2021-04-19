@@ -1,3 +1,4 @@
 #DValues for staging environment
 NAMESPACE: staging
-
+TELEGRAF_VOLUMENAME: fdk-dev-staging-telegraf
+TELEGRAF_STORAGESIZE: 9G
