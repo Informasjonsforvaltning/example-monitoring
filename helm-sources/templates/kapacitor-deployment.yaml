@@ -10,7 +10,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      fdk.service: influxdb
+      fdk.service: kapacitator
   strategy:
     type: RollingUpdate
   template:
@@ -26,7 +26,7 @@ spec:
           - name: NAMESPACE
             valueFrom:
               secretKeyRef:
-                name: commonurl-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                name: common-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
                 key: NAMESPACE
           name: kapacitor
           image: kapacitor:latest
