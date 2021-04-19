@@ -3,8 +3,9 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: chronograf
+    fdk.service: chronograf
   name: chronograf
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
 spec:
   ports:
   - name: "8888"

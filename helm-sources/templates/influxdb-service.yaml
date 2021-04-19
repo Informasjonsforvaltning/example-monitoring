@@ -3,8 +3,9 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: influxdb
+    fdk.service: influxdb
   name: influxdb
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
 spec:
   ports:
   - name: "8083"

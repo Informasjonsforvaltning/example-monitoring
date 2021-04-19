@@ -5,6 +5,7 @@ metadata:
   labels:
     fdk.service: kapacitor
   name: kapacitor
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
 spec:
   ports:
   - name: "9092"

@@ -3,8 +3,9 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    fdk.service: telegraf
-  name: telegraf
+    fdk.service: kapacitor
+  name: kapacitor
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
 spec:
   ports:
     - name: "8080"
