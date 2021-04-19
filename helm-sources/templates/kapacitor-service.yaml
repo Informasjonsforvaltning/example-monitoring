@@ -10,6 +10,9 @@ spec:
   - name: "9092"
     port: 9092
     targetPort: 9092
+  - name: "8080"
+    port: 8080
+    targetPort: 8080
   selector:
     fdk.service: kapacitor
 status:

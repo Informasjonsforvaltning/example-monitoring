@@ -5,8 +5,12 @@ metadata:
   labels:
     fdk.service: telegraf
   name: telegraf
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      fdk.service: telegraf
   strategy:
     type: Recreate
   template:
@@ -16,17 +20,27 @@ spec:
         fdk.service: telegraf
     spec:
       containers:
-      - image: telegraf:latest
-        name: telegraf
-        resources: {}
-        volumeMounts:
-        - mountPath: /etc/telegraf/telegraf.conf
-          name: telegraf-claim0
-          readOnly: true
+        - env:
+          - name: NAMESPACE
+            valueFrom:
+              secretKeyRef:
+                name: commonurl-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                key: NAMESPACE
+          name: telegraf
+          image: telegraf:latest
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: {{ required "Missing value TELEGRAF_MEMORY" .Values.TELEGRAF_MEMORY | quote }}
+          volumeMounts:
+          - mountPath: /etc/telegraf/telegraf.conf
+            name: telegraf-claim0
+            readOnly: true
+        volumes:
+        - name: telegraf-claim0
+          persistentVolumeClaim:
+            claimName: telegraf-claim0
+            readOnly: true
       restartPolicy: Always
-      volumes:
-      - name: telegraf-claim0
-        persistentVolumeClaim:
-          claimName: telegraf-claim0
-          readOnly: true
 status: {}

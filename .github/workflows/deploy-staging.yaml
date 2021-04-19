@@ -1,10 +1,13 @@
 name: Deploy to staging
 
 on:
-  pull_request:
-    types: [ready_for_review, opened, reopened, synchronize]
+  push:
     branches:
-      - master
+      - chore/hos/TICK-POC
+#  pull_request:
+#    types: [ready_for_review, opened, reopened, synchronize]
+#    branches:
+#      - master
   # Allows you to run the workflow manually from the Actions tab
   workflow_dispatch:
 

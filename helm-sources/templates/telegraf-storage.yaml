@@ -15,18 +15,6 @@ spec:
     requests:
       storage: {{ required "Missing value TELEGRAF_STORAGESIZE" .Values.TELEGRAF_STORAGESIZE }}
 status: {}
-
-
-
-spec:
-  storageClassName: ""
-  volumeName: {{ required "Missing value TELEGRAF_VOLUMENAME" .Values.TELEGRAF_VOLUMENAME }}
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{ required "Missing value TELEGRAF_STORAGESIZE" .Values.TELEGRAF_STORAGESIZE }}
-status: {}
 ---
 kind: PersistentVolume
 apiVersion: v1
