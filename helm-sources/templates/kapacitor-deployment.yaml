@@ -20,20 +20,20 @@ spec:
         fdk.service: kapacitor
     spec:
       containers:
-        - env:
-          - name: KAPACITOR_INFLUXDB_0_URLS_0
-            value: http://influxdb:8086
-          - name: NAMESPACE
-            valueFrom:
-              secretKeyRef:
-                name: common-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
-                key: NAMESPACE
-          name: kapacitor
-          image: kapacitor:latest
-          ports:
-          - containerPort: 9092
-          resources:
-            requests:
-              memory: {{ required "Missing value KAPACITOR_MEMORY" .Values.KAPACITOR_MEMORY | quote }}
+        name: kapacitor
+        image: kapacitor:latest
+        env:
+        - name: KAPACITOR_INFLUXDB_0_URLS_0
+          value: http://influxdb:8086
+        - name: NAMESPACE
+          valueFrom:
+            secretKeyRef:
+              name: common-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+              key: NAMESPACE
+        ports:
+        - containerPort: 9092
+        resources:
+          requests:
+            memory: {{ required "Missing value KAPACITOR_MEMORY" .Values.KAPACITOR_MEMORY | quote }}
       restartPolicy: Always
 status: {}
