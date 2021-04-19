@@ -20,7 +20,7 @@ spec:
         fdk.service: kapacitor
     spec:
       containers:
-        name: kapacitor
+      - name: kapacitor
         image: kapacitor:latest
         imagePullPolicy: Always
         env:

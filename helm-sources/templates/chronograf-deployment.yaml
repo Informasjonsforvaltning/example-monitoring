@@ -20,7 +20,7 @@ spec:
         fdk.service: chronograf
     spec:
       containers:
-        name: chronograf
+      - name: chronograf
         image: chronograf:latest
         imagePullPolicy: Always
         env:

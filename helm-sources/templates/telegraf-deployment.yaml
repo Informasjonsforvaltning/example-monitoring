@@ -20,7 +20,7 @@ spec:
         fdk.service: telegraf
     spec:
       containers:
-        name: telegraf
+      - name: telegraf
         image: telegraf:latest
         imagePullPolicy: Always
         env:

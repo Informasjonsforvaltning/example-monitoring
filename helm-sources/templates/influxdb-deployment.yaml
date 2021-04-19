@@ -20,7 +20,7 @@ spec:
         fdk.service: influxdb
     spec:
       containers:
-        name: influxdb
+      - name: influxdb
         image: influxdb:latest
         imagePullPolicy: Always
         env:
