@@ -29,7 +29,7 @@ spec:
           name: telegraf
           image: telegraf:latest
           ports:
-            - containerPort: 8080
+          - containerPort: 8080
           resources:
             requests:
               memory: {{ required "Missing value TELEGRAF_MEMORY" .Values.TELEGRAF_MEMORY | quote }}
