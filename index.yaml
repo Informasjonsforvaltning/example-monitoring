@@ -3,9 +3,9 @@ entries:
   example-monitoring:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-19T14:35:00.639013651+02:00"
+    created: "2021-04-19T14:40:31.544872748+02:00"
     description: Config for example-monitoring
-    digest: 5ae872c485a82dbd89d8cdf58947cdb23e29e3791ff8d9907236790ec728ad10
+    digest: ebce545d8aa3a2bb9b4d826f7db7f91bf281aea257c73b26e0d380410ff5613c
     home: https://github.com/Informasjonsforvaltning/example-monitoring
     name: example-monitoring
     urls:
@@ -14,7 +14,7 @@ entries:
   fdk-concept-harvester-etl:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-19T14:35:00.639319079+02:00"
+    created: "2021-04-19T14:40:31.545101958+02:00"
     description: Config for FDK concept harvester etl
     digest: 3299e862ef79e37d1232ba2ae3376c676b41ced20e3d8bfe66caa58296197445
     home: https://github.com/Informasjonsforvaltning/fdk-concept-harvester-etl
@@ -22,4 +22,4 @@ entries:
     urls:
     - https://informasjonsforvaltning.github.io/example-monitoring/fdk-concept-harvester-etl-0.1.0.tgz
     version: 0.1.0
-generated: "2021-04-19T14:35:00.638630629+02:00"
+generated: "2021-04-19T14:40:31.544474016+02:00"
