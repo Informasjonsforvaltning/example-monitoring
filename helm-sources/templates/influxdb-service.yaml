@@ -7,6 +7,7 @@ metadata:
   name: influxdb
   namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
 spec:
+  type: NodePort
   ports:
   - name: "8083"
     port: 8083
