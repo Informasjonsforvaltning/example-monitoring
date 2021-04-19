@@ -20,21 +20,21 @@ spec:
         fdk.service: influxdb
     spec:
       containers:
-        - env:
-          - name: NAMESPACE
-            valueFrom:
-              secretKeyRef:
-                name: common-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
-                key: NAMESPACE
-          name: influxdb
-          image: influxdb:latest
-          imagePullPolicy: Always
-          ports:
-          - containerPort: 8083
-          - containerPort: 8086
-          - containerPort: 8090
-          resources:
-            requests:
-              memory: {{ required "Missing value INFLUXDB_MEMORY" .Values.INFLUXDB_MEMORY | quote }}
+        name: influxdb
+        image: influxdb:latest
+        imagePullPolicy: Always
+        env:
+        - name: NAMESPACE
+          valueFrom:
+            secretKeyRef:
+              name: common-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+              key: NAMESPACE
+        ports:
+        - containerPort: 8083
+        - containerPort: 8086
+        - containerPort: 8090
+        resources:
+          requests:
+            memory: {{ required "Missing value INFLUXDB_MEMORY" .Values.INFLUXDB_MEMORY | quote }}
       restartPolicy: Always
 status: {}

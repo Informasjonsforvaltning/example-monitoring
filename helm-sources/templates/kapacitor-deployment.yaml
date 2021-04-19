@@ -22,6 +22,7 @@ spec:
       containers:
         name: kapacitor
         image: kapacitor:latest
+        imagePullPolicy: Always
         env:
         - name: KAPACITOR_INFLUXDB_0_URLS_0
           value: http://influxdb:8086

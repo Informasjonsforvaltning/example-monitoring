@@ -20,19 +20,19 @@ spec:
         fdk.service: chronograf
     spec:
       containers:
-        - env:
-          - name: NAMESPACE
-            valueFrom:
-              secretKeyRef:
-                name: common-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
-                key: NAMESPACE
-          name: chronograf
-          image: chronograf:latest
-          imagePullPolicy: Always
-          ports:
-          - containerPort: 8888
-          resources:
-            requests:
-              memory: {{ required "Missing value CHRONOGRAF_MEMORY" .Values.CHRONOGRAF_MEMORY | quote }}
+        name: chronograf
+        image: chronograf:latest
+        imagePullPolicy: Always
+        env:
+        - name: NAMESPACE
+          valueFrom:
+            secretKeyRef:
+              name: common-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+              key: NAMESPACE
+        ports:
+        - containerPort: 8888
+        resources:
+          requests:
+            memory: {{ required "Missing value CHRONOGRAF_MEMORY" .Values.CHRONOGRAF_MEMORY | quote }}
       restartPolicy: Always
 status: {}
